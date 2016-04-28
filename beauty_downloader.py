@@ -7,6 +7,7 @@ import os
 import re
 import urllib
 import sys
+from time import sleep
 requests.packages.urllib3.disable_warnings()
 
 
@@ -15,15 +16,16 @@ def example6(argv):
     start = int(argv[1])
     end = int(argv[2])
     pps = int(argv[3])
-    print pps
     board_waiting_list = cw.GetBoardURL("Beauty", start, end)
     for boardurl in board_waiting_list:
+        sleep(1)
         boardhtml = cw.GetHTML(boardurl)
         print boardurl
         post_waiting_list = cw.GetPostURL(boardhtml)
         for pourl in post_waiting_list:
-            posthtml = cw.GetHTML(pourl)
+            sleep(1)
             try:
+                posthtml = cw.GetHTML(pourl)
                 post = cw.Post(posthtml)
             except:
                 continue
@@ -47,7 +49,7 @@ def post_download(post):
 
     if not os.path.exists(dir_name):
         try:
-            print os.mkdir(dir_name)
+            os.mkdir(dir_name)
         except:
             print "error could not mkdir"
 
